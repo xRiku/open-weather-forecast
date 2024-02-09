@@ -1,8 +1,17 @@
+import { ThemeProvider } from 'styled-components'
+import colors from './styles/colors'
+import { GlobalStyle } from './styles/global'
+
+const theme = {
+  colors,
+}
 
 function App() {
-
   return (
-      <h1>Hello World</h1>
+    <ThemeProvider theme={theme}>
+      <span style={{ fontSize: '80px' }}>Hello World</span>
+      <GlobalStyle />
+    </ThemeProvider>
   )
 }
 
