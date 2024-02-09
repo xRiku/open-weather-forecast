@@ -37,6 +37,7 @@ export const GlobalStyle = createGlobalStyle`
         cursor: pointer;
         border: none;
         background-color: transparent;
+        color: inherit;
     }
 
     ul {
