@@ -25,7 +25,6 @@ export const GlobalStyle = createGlobalStyle`
         }
         background: ${(props) => props.theme.colors.black};
         -webkit-font-smoothing: antialised;
-        overflow-y: scroll;
         color: ${(props) => props.theme.colors.white};
     }
 

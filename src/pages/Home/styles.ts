@@ -19,6 +19,11 @@ export const CityForecast = styled.div`
   height: calc(100vh - 16rem);
 `
 
+export const WeatherReport = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 export const CitiesWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
