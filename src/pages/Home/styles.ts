@@ -11,12 +11,31 @@ export const CitiesContainer = styled.div`
 `
 
 export const CityForecast = styled.div`
+  display: grid;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: calc(100vh - 16rem);
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      span {
+        font-size: 1rem;
+        line-height: 0.5rem;
+      }
+    }
+  }
 `
 
 export const WeatherReport = styled.div`

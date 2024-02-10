@@ -59,8 +59,15 @@ export default function Home() {
               <h1>New york</h1>
               <div>
                 <Icon name="01" size={'8rem'} />
-                <div></div>
+                <div>
+                  <span>Temp: 24ºC</span>
+                  <span>Feels like: 24ºC</span>
+                  <span>Humidity: 24%</span>
+                  <span>Sunrise: 06:28</span>
+                  <span>Sunset: 18:58</span>
+                </div>
               </div>
+              <h1>Clouds</h1>
             </>
           )}
         </CityForecast>
