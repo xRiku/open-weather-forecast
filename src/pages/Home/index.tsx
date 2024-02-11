@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Header } from '../../components/Header'
 import {
   CitiesContainer,
@@ -7,7 +7,8 @@ import {
   CityForecast,
 } from './styles'
 import Icon from '../../components/Icon'
-
+import { useQuery } from '@tanstack/react-query'
+import useSettingsStore from '../../store/SettingsStore'
 const cities = [
   'New York',
   'Los Angeles',
@@ -30,18 +31,23 @@ const cities = [
 ]
 
 export default function Home() {
-  const [selectedCity, setSelectedCity] = useState('Vancouver')
+  const [selectedCity, setSelectedCity] = useState('Guarapari')
 
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   const response = await fetch(
-    //     `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`,
-    //   )
-    //   const jsonData = await response.json()
-    //   console.log(jsonData)
-    // }
-    // fetchData()
-  }, [])
+  const temperatureUnit = useSettingsStore((state) => state.temperatureUnit)
+
+  const fetchData = async () => {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&units=${temperatureUnit}&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`,
+    )
+    const jsonData = await response.json()
+    console.log(jsonData)
+    return jsonData
+  }
+  fetchData()
+  const { status, data } = useQuery({
+    queryKey: ['weather'],
+    queryFn: fetchData,
+  })
 
   const handleCitiesCardClick = (city: string) => {
     setSelectedCity(city)
@@ -56,15 +62,33 @@ export default function Home() {
             <h1>Pick a city to see the full forecast</h1>
           ) : (
             <div id="info-grid">
-              <h1>New york</h1>
+              <h1>{data.name}</h1>
               <div></div>
-              <Icon name="01" size={'8rem'} />
+              <Icon name={data.weather[0].icon} size={'8rem'} />
               <div>
-                <span>Temp: 24ºC</span>
-                <span>Feels like: 24ºC</span>
-                <span>Humidity: 24%</span>
-                <span>Sunrise: 06:28</span>
-                <span>Sunset: 18:58</span>
+                <span>Temp: {data.main.temp}</span>
+                <span>Feels like: {data.main.feels_like}</span>
+                <span>Humidity: {data.main.humidity}%</span>
+                <span>
+                  Sunrise:{' '}
+                  {new Date(data.sys.sunrise * 1000).toLocaleString(
+                    navigator.language,
+                    {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    },
+                  )}
+                </span>
+                <span>
+                  Sunset:{' '}
+                  {new Date(data.sys.sunset * 1000).toLocaleString(
+                    navigator.language,
+                    {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    },
+                  )}
+                </span>
               </div>
               <h1>Clouds</h1>
               <div></div>
