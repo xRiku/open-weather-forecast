@@ -55,20 +55,20 @@ export default function Home() {
           {selectedCity === '' ? (
             <h1>Pick a city to see the full forecast</h1>
           ) : (
-            <>
+            <div id="info-grid">
               <h1>New york</h1>
+              <div></div>
+              <Icon name="01" size={'8rem'} />
               <div>
-                <Icon name="01" size={'8rem'} />
-                <div>
-                  <span>Temp: 24ºC</span>
-                  <span>Feels like: 24ºC</span>
-                  <span>Humidity: 24%</span>
-                  <span>Sunrise: 06:28</span>
-                  <span>Sunset: 18:58</span>
-                </div>
+                <span>Temp: 24ºC</span>
+                <span>Feels like: 24ºC</span>
+                <span>Humidity: 24%</span>
+                <span>Sunrise: 06:28</span>
+                <span>Sunset: 18:58</span>
               </div>
               <h1>Clouds</h1>
-            </>
+              <div></div>
+            </div>
           )}
         </CityForecast>
         <CitiesWrapper>

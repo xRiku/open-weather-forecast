@@ -11,16 +11,26 @@ export const CitiesContainer = styled.div`
 `
 
 export const CityForecast = styled.div`
-  display: grid;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: calc(100vh - 16rem);
+
+  #info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 0.5fr 1fr 0.5fr;
+
+    h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   div {
-    display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 1rem;
@@ -31,13 +41,13 @@ export const CityForecast = styled.div`
       align-items: start;
       justify-content: center;
       span {
-        font-size: 1rem;
-        line-height: 0.5rem;
+        font-size: 1.5rem;
+        line-height: 0.7rem;
+        font-weight: 300;
       }
     }
   }
 `
-
 export const WeatherReport = styled.div`
   display: flex;
   flex-direction: column;
