@@ -10,6 +10,8 @@ import Icon from '../../components/Icon'
 import { useQuery } from '@tanstack/react-query'
 import useSettingsStore from '../../store/SettingsStore'
 import SettingsModal from '../../components/SettingsModal'
+import useModalStore from '../../store/ModalStore'
+import TimeFormat from '../../enums/time-format'
 const cities = [
   'New York',
   'Los Angeles',
@@ -34,7 +36,12 @@ const cities = [
 export default function Home() {
   const [selectedCity, setSelectedCity] = useState('')
 
-  const temperatureUnit = useSettingsStore((state) => state.temperatureUnit)
+  const isOpen = useModalStore((state) => state.isOpen)
+
+  const [temperatureUnit, timeFormat] = useSettingsStore((state) => [
+    state.temperatureUnit,
+    state.timeFormat,
+  ])
 
   const fetchData = async () => {
     const response = await fetch(
@@ -44,10 +51,11 @@ export default function Home() {
     console.log(jsonData)
     return jsonData
   }
-  fetchData()
+
   const { status, data } = useQuery({
-    queryKey: ['weather'],
+    queryKey: ['weather', selectedCity],
     queryFn: fetchData,
+    enabled: !!selectedCity,
   })
 
   const handleCitiesCardClick = (city: string) => {
@@ -81,6 +89,7 @@ export default function Home() {
                     {
                       hour: '2-digit',
                       minute: '2-digit',
+                      hour12: timeFormat === TimeFormat['AM/PM'],
                     },
                   )}
                 </span>
@@ -91,11 +100,12 @@ export default function Home() {
                     {
                       hour: '2-digit',
                       minute: '2-digit',
+                      hour12: timeFormat === TimeFormat['AM/PM'],
                     },
                   )}
                 </span>
               </div>
-              <h1>Clouds</h1>
+              <h1>{data.weather[0].main}</h1>
               <div></div>
             </div>
           ) : null}
@@ -108,7 +118,7 @@ export default function Home() {
           ))}
         </CitiesWrapper>
       </CitiesContainer>
-      <SettingsModal />
+      {isOpen && <SettingsModal />}
     </div>
   )
 }
