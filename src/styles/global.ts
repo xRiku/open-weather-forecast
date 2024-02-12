@@ -32,6 +32,10 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Helvetica Neue', 'Helvetica', 'Roboto', sans-serif;
     }
 
+    h1, h2, h3, h4, h5, h6{
+        font-weight: 500;
+    }
+
     button {
         cursor: pointer;
         border: none;

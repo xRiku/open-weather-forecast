@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
-export const ModalOverlay = styled.div`
+export const ModalOverlay = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,6 +55,10 @@ export const SettingsButton = styled.button<{ $isSelected?: boolean }>`
   border-radius: 0.25rem;
   border: none;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: 0.2s;
+  }
   border: 1px solid ${({ theme }) => theme.colors.blue};
   background-color: ${({ theme, $isSelected }) =>
     $isSelected ? theme.colors.blue : theme.colors.white};

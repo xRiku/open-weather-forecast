@@ -2,16 +2,22 @@ import useModalStore from '../../store/ModalStore'
 import useSettingsStore from '../../store/SettingsStore'
 import TemperatureUnit from '../../enums/temperature-unit'
 import { ModalOverlay, ModalContent, ButtonBox, SettingsButton } from './styles'
+import TimeFormat from '../../enums/time-format'
 
 export default function SettingsModal() {
-  const { toggleModal } = useModalStore()
-  const [temperatureUnit, setTemperatureUnit] = useSettingsStore((state) => [
-    state.temperatureUnit,
-    state.setTemperatureUnit,
-  ])
+  const [isOpen, toggleModal] = useModalStore((state) => {
+    return [state.isOpen, state.toggleModal]
+  })
+  const [temperatureUnit, setTemperatureUnit, timeFormat, setTime] =
+    useSettingsStore((state) => [
+      state.temperatureUnit,
+      state.setTemperatureUnit,
+      state.timeFormat,
+      state.setTime,
+    ])
 
   return (
-    <ModalOverlay onClick={toggleModal}>
+    <ModalOverlay $isOpen={isOpen}>
       <ModalContent>
         <h1>Settings</h1>
         <ButtonBox>
@@ -44,8 +50,18 @@ export default function SettingsModal() {
         <ButtonBox>
           <h2>Time</h2>
           <div>
-            <SettingsButton>AM/PM</SettingsButton>
-            <SettingsButton>24h</SettingsButton>
+            <SettingsButton
+              $isSelected={timeFormat === TimeFormat['AM/PM']}
+              onClick={() => setTime(TimeFormat['AM/PM'])}
+            >
+              AM/PM
+            </SettingsButton>
+            <SettingsButton
+              $isSelected={timeFormat === TimeFormat['24h']}
+              onClick={() => setTime(TimeFormat['24h'])}
+            >
+              24h
+            </SettingsButton>
           </div>
         </ButtonBox>
         <ButtonBox>
