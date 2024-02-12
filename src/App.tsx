@@ -3,6 +3,7 @@ import { GlobalStyle } from './styles/global'
 import Home from './pages/Home'
 import { defaultTheme } from './styles/theme'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient()
 
@@ -13,6 +14,7 @@ function App() {
         <Home />
         <GlobalStyle />
       </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   )
 }

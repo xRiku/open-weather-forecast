@@ -9,6 +9,7 @@ import {
 import Icon from '../../components/Icon'
 import { useQuery } from '@tanstack/react-query'
 import useSettingsStore from '../../store/SettingsStore'
+import SettingsModal from '../../components/SettingsModal'
 const cities = [
   'New York',
   'Los Angeles',
@@ -31,7 +32,7 @@ const cities = [
 ]
 
 export default function Home() {
-  const [selectedCity, setSelectedCity] = useState('Guarapari')
+  const [selectedCity, setSelectedCity] = useState('')
 
   const temperatureUnit = useSettingsStore((state) => state.temperatureUnit)
 
@@ -60,7 +61,11 @@ export default function Home() {
         <CityForecast>
           {selectedCity === '' ? (
             <h1>Pick a city to see the full forecast</h1>
-          ) : (
+          ) : status === 'pending' ? (
+            <h1>Loading...</h1>
+          ) : status === 'error' ? (
+            <h1>Error</h1>
+          ) : status === 'success' && data !== undefined ? (
             <div id="info-grid">
               <h1>{data.name}</h1>
               <div></div>
@@ -93,7 +98,7 @@ export default function Home() {
               <h1>Clouds</h1>
               <div></div>
             </div>
-          )}
+          ) : null}
         </CityForecast>
         <CitiesWrapper>
           {cities.map((city) => (
@@ -103,6 +108,7 @@ export default function Home() {
           ))}
         </CitiesWrapper>
       </CitiesContainer>
+      <SettingsModal />
     </div>
   )
 }

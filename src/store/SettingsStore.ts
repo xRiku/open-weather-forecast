@@ -1,17 +1,12 @@
 import { create } from 'zustand'
-
-enum TemperatureUnit {
-  'metric',
-  'imperial',
-  'standard',
-}
+import TemperatureUnit from '../enums/temperature-unit'
 
 type SettingsStore = {
   theme: 'light' | 'dark'
   temperatureUnit: TemperatureUnit
   time: '24h' | '12h'
   toggleTheme: () => void
-  toggleTemperatureUnit: (unit: TemperatureUnit) => void
+  setTemperatureUnit: (unit: TemperatureUnit) => void
   toggleTime: () => void
 }
 
@@ -20,10 +15,7 @@ const useSettingsStore = create<SettingsStore>((set) => ({
   temperatureUnit: TemperatureUnit.standard,
   toggleTheme: () =>
     set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
-  toggleTemperatureUnit: () =>
-    set((state) => ({
-      temperatureUnit: state.temperatureUnit,
-    })),
+  setTemperatureUnit: (temperatureUnit) => set({ temperatureUnit }),
   time: '24h',
   toggleTime: () =>
     set((state) => ({ time: state.time === '24h' ? '12h' : '24h' })),
