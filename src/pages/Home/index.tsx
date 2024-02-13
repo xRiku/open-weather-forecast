@@ -12,6 +12,7 @@ import useSettingsStore from '../../store/SettingsStore'
 import SettingsModal from '../../components/SettingsModal'
 import useModalStore from '../../store/ModalStore'
 import TimeFormat from '../../enums/time-format'
+import addUnitToTemperatureByType from '../../utils/add-unit-to-temperature-by-type'
 const cities = [
   'New York',
   'Los Angeles',
@@ -53,7 +54,7 @@ export default function Home() {
   }
 
   const { status, data } = useQuery({
-    queryKey: ['weather', selectedCity],
+    queryKey: ['weather', selectedCity, temperatureUnit],
     queryFn: fetchData,
     enabled: !!selectedCity,
   })
@@ -79,8 +80,17 @@ export default function Home() {
               <div></div>
               <Icon name={data.weather[0].icon} size={'8rem'} />
               <div>
-                <span>Temp: {data.main.temp}</span>
-                <span>Feels like: {data.main.feels_like}</span>
+                <span>
+                  Temp:{' '}
+                  {addUnitToTemperatureByType(data.main.temp, temperatureUnit)}
+                </span>
+                <span>
+                  Feels like:{' '}
+                  {addUnitToTemperatureByType(
+                    data.main.feels_like,
+                    temperatureUnit,
+                  )}
+                </span>
                 <span>Humidity: {data.main.humidity}%</span>
                 <span>
                   Sunrise:{' '}

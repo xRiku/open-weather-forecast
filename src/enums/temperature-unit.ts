@@ -1,6 +1,6 @@
 enum TemperatureUnit {
-  'metric',
-  'imperial',
-  'standard',
+  'metric' = 'metric',
+  'imperial' = 'imperial',
+  'standard' = 'standard',
 }
 export default TemperatureUnit

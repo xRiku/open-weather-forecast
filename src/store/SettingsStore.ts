@@ -2,11 +2,6 @@ import { create } from 'zustand'
 import TemperatureUnit from '../enums/temperature-unit'
 import TimeFormat from '../enums/time-format'
 
-type SettingsStoreSettings = {
-  temperatureUnit: TemperatureUnit
-  timeFormat: TimeFormat
-}
-
 type SettingsStore = {
   temperatureUnit: TemperatureUnit
   timeFormat: TimeFormat
