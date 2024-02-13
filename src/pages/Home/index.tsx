@@ -77,7 +77,7 @@ export default function Home() {
             <h1>Loading...</h1>
           ) : status === 'error' ? (
             <h1>Error</h1>
-          ) : status === 'success' && data !== undefined ? (
+          ) : status === 'success' && data.cod === 200 ? (
             <div id="info-grid">
               <h1>{data.name}</h1>
               <div></div>
@@ -121,6 +121,8 @@ export default function Home() {
               <h1>{data.weather[0].main}</h1>
               <div></div>
             </div>
+          ) : status === 'success' && data.cod === '404' ? (
+            <h1>City {selectedCity} not Found.</h1>
           ) : null}
         </CityForecast>
         <CitiesWrapper>
