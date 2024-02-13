@@ -15,6 +15,7 @@ export default function SettingsModal() {
     temperatureUnitTemp,
     timeFormatTemp,
     resetTempSettings,
+    timeFormat,
   ] = useSettingsStore((state) => [
     state.setTemperatureUnit,
     state.setTimeFormat,
@@ -22,7 +23,14 @@ export default function SettingsModal() {
     state.temperatureUnitTemp,
     state.timeFormatTemp,
     state.resetTempSettings,
+    state.timeFormat,
   ])
+
+  const time = new Date().toLocaleTimeString(navigator.language, {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: timeFormat === TimeFormat['AM/PM'],
+  })
 
   return (
     <ModalOverlay $isOpen={isOpen}>
@@ -91,6 +99,9 @@ export default function SettingsModal() {
               Save
             </SettingsButton>
           </div>
+        </ButtonBox>
+        <ButtonBox>
+          <h2>{time}</h2>
         </ButtonBox>
       </ModalContent>
     </ModalOverlay>
