@@ -62,7 +62,7 @@ export const CitiesWrapper = styled.div`
   width: 100%;
   height: 100%;
 `
-export const CityCard = styled.li`
+export const CityCard = styled.li<{ $selected: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -74,6 +74,10 @@ export const CityCard = styled.li`
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 0.2s;
+  ${({ $selected, theme }) =>
+    $selected
+      ? `background-color: ${theme.colors.blue}; color: ${theme.colors.white}; transition: 0s`
+      : ''}
   &:hover {
     transform: scale(1.05);
     color: ${({ theme }) => theme.colors.blue};

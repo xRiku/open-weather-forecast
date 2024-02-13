@@ -5,8 +5,10 @@ import TimeFormat from '../../enums/time-format'
 import useSettingsStore from '../../store/SettingsStore'
 import { useState } from 'react'
 import Icon from '../Icon'
+import useSearchStore from '../../store/SearchStore'
 export function Header() {
   const toggleModal = useModalStore((state) => state.toggleModal)
+  const [setSelectedCity] = useSearchStore((state) => [state.setSelectedCity])
 
   const [isSearchOpen, toggleSearch] = useState(false)
 
@@ -18,6 +20,12 @@ export function Header() {
     hour12: timeFormat === TimeFormat['AM/PM'],
   })
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setSelectedCity((e.target as HTMLInputElement).value)
+    }
+  }
+
   return (
     <HeaderWrapper>
       <HeaderTime>{time}</HeaderTime>
@@ -26,7 +34,7 @@ export function Header() {
           <button onClick={() => toggleSearch(true)}>Search</button>
         ) : (
           <div>
-            <input type="text" placeholder="Search" />
+            <input type="text" onKeyDown={handleKeyDown} placeholder="Search" />
             <span onClick={() => toggleSearch(false)}>
               <Icon name="close" weatherCondition={false} />
             </span>

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Header } from '../../components/Header'
 import {
   CitiesContainer,
@@ -13,6 +12,7 @@ import SettingsModal from '../../components/SettingsModal'
 import useModalStore from '../../store/ModalStore'
 import TimeFormat from '../../enums/time-format'
 import addUnitToTemperatureByType from '../../utils/add-unit-to-temperature-by-type'
+import useSearchStore from '../../store/SearchStore'
 const cities = [
   'New York',
   'Los Angeles',
@@ -35,7 +35,10 @@ const cities = [
 ]
 
 export default function Home() {
-  const [selectedCity, setSelectedCity] = useState('')
+  const [selectedCity, setSelectedCity] = useSearchStore((state) => [
+    state.selectedCity,
+    state.setSelectedCity,
+  ])
 
   const isOpen = useModalStore((state) => state.isOpen)
 
@@ -122,7 +125,11 @@ export default function Home() {
         </CityForecast>
         <CitiesWrapper>
           {cities.map((city) => (
-            <CityCard onClick={() => handleCitiesCardClick(city)} key={city}>
+            <CityCard
+              $selected={selectedCity === city}
+              onClick={() => handleCitiesCardClick(city)}
+              key={city}
+            >
               {city}
             </CityCard>
           ))}
