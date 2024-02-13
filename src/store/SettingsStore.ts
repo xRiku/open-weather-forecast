@@ -2,23 +2,40 @@ import { create } from 'zustand'
 import TemperatureUnit from '../enums/temperature-unit'
 import TimeFormat from '../enums/time-format'
 
-type SettingsStore = {
-  theme: 'light' | 'dark'
+type SettingsStoreSettings = {
   temperatureUnit: TemperatureUnit
   timeFormat: TimeFormat
-  toggleTheme: () => void
+}
+
+type SettingsStore = {
+  temperatureUnit: TemperatureUnit
+  timeFormat: TimeFormat
+  temperatureUnitTemp: TemperatureUnit
+  timeFormatTemp: TimeFormat
   setTemperatureUnit: (unit: TemperatureUnit) => void
-  setTime: (time: TimeFormat) => void
+  setTimeFormat: (time: TimeFormat) => void
+  setSettings: () => void
+  resetTempSettings: () => void
 }
 
 const useSettingsStore = create<SettingsStore>((set) => ({
-  theme: 'light',
   temperatureUnit: TemperatureUnit.standard,
-  toggleTheme: () =>
-    set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
-  setTemperatureUnit: (temperatureUnit) => set({ temperatureUnit }),
+  temperatureUnitTemp: TemperatureUnit.standard,
+  timeFormatTemp: TimeFormat['24h'],
   timeFormat: TimeFormat['24h'],
-  setTime: (timeFormat) => set({ timeFormat }),
+  setTemperatureUnit: (temperatureUnit) =>
+    set({ temperatureUnitTemp: temperatureUnit }),
+  setTimeFormat: (timeFormat) => set({ timeFormatTemp: timeFormat }),
+  setSettings: () =>
+    set((state) => ({
+      timeFormat: state.timeFormatTemp,
+      temperatureUnit: state.temperatureUnitTemp,
+    })),
+  resetTempSettings: () =>
+    set((state) => ({
+      temperatureUnitTemp: state.temperatureUnit,
+      timeFormatTemp: state.timeFormat,
+    })),
 }))
 
 export default useSettingsStore

@@ -8,13 +8,21 @@ export default function SettingsModal() {
   const [isOpen, toggleModal] = useModalStore((state) => {
     return [state.isOpen, state.toggleModal]
   })
-  const [temperatureUnit, setTemperatureUnit, timeFormat, setTime] =
-    useSettingsStore((state) => [
-      state.temperatureUnit,
-      state.setTemperatureUnit,
-      state.timeFormat,
-      state.setTime,
-    ])
+  const [
+    setTemperatureUnit,
+    setTimeFormat,
+    setSettings,
+    temperatureUnitTemp,
+    timeFormatTemp,
+    resetTempSettings,
+  ] = useSettingsStore((state) => [
+    state.setTemperatureUnit,
+    state.setTimeFormat,
+    state.setSettings,
+    state.temperatureUnitTemp,
+    state.timeFormatTemp,
+    state.resetTempSettings,
+  ])
 
   return (
     <ModalOverlay $isOpen={isOpen}>
@@ -24,7 +32,7 @@ export default function SettingsModal() {
           <h2>Units</h2>
           <div>
             <SettingsButton
-              $isSelected={temperatureUnit === TemperatureUnit.imperial}
+              $isSelected={temperatureUnitTemp === TemperatureUnit.imperial}
               onClick={() => {
                 setTemperatureUnit(TemperatureUnit.imperial)
               }}
@@ -32,7 +40,7 @@ export default function SettingsModal() {
               Imperial
             </SettingsButton>
             <SettingsButton
-              $isSelected={temperatureUnit === TemperatureUnit.metric}
+              $isSelected={temperatureUnitTemp === TemperatureUnit.metric}
               onClick={() => {
                 setTemperatureUnit(TemperatureUnit.metric)
               }}
@@ -40,7 +48,7 @@ export default function SettingsModal() {
               Metric
             </SettingsButton>
             <SettingsButton
-              $isSelected={temperatureUnit === TemperatureUnit.standard}
+              $isSelected={temperatureUnitTemp === TemperatureUnit.standard}
               onClick={() => setTemperatureUnit(TemperatureUnit.standard)}
             >
               Standard
@@ -51,14 +59,14 @@ export default function SettingsModal() {
           <h2>Time</h2>
           <div>
             <SettingsButton
-              $isSelected={timeFormat === TimeFormat['AM/PM']}
-              onClick={() => setTime(TimeFormat['AM/PM'])}
+              $isSelected={timeFormatTemp === TimeFormat['AM/PM']}
+              onClick={() => setTimeFormat(TimeFormat['AM/PM'])}
             >
               AM/PM
             </SettingsButton>
             <SettingsButton
-              $isSelected={timeFormat === TimeFormat['24h']}
-              onClick={() => setTime(TimeFormat['24h'])}
+              $isSelected={timeFormatTemp === TimeFormat['24h']}
+              onClick={() => setTimeFormat(TimeFormat['24h'])}
             >
               24h
             </SettingsButton>
@@ -66,8 +74,22 @@ export default function SettingsModal() {
         </ButtonBox>
         <ButtonBox>
           <div>
-            <SettingsButton onClick={toggleModal}>Cancel</SettingsButton>
-            <SettingsButton>Save</SettingsButton>
+            <SettingsButton
+              onClick={() => {
+                resetTempSettings()
+                toggleModal()
+              }}
+            >
+              Cancel
+            </SettingsButton>
+            <SettingsButton
+              onClick={() => {
+                setSettings()
+                toggleModal()
+              }}
+            >
+              Save
+            </SettingsButton>
           </div>
         </ButtonBox>
       </ModalContent>
