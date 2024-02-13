@@ -3,8 +3,12 @@ import themeSwitch from '../../assets/theme-switch.svg'
 import useModalStore from '../../store/ModalStore'
 import TimeFormat from '../../enums/time-format'
 import useSettingsStore from '../../store/SettingsStore'
+import { useState } from 'react'
+import Icon from '../Icon'
 export function Header() {
   const toggleModal = useModalStore((state) => state.toggleModal)
+
+  const [isSearchOpen, toggleSearch] = useState(false)
 
   const [timeFormat] = useSettingsStore((state) => [state.timeFormat])
 
@@ -18,7 +22,16 @@ export function Header() {
     <HeaderWrapper>
       <HeaderTime>{time}</HeaderTime>
       <HeaderOptions>
-        <button>Search</button>
+        {!isSearchOpen ? (
+          <button onClick={() => toggleSearch(true)}>Search</button>
+        ) : (
+          <div>
+            <input type="text" placeholder="Search" />
+            <span onClick={() => toggleSearch(false)}>
+              <Icon name="close" weatherCondition={false} />
+            </span>
+          </div>
+        )}
         <button onClick={toggleModal}>Settings</button>
         <img
           src={themeSwitch}
