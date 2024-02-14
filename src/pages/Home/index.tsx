@@ -25,7 +25,6 @@ export default function Home() {
       `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&units=${temperatureUnit}&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`,
     )
     const jsonData = await response.json()
-    console.log(jsonData)
     return jsonData
   }
 
