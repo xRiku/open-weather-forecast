@@ -1,22 +1,24 @@
 import styled from 'styled-components'
 
-export const CitiesWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
+export const CitiesWrapper = styled.ul`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 1rem;
   width: 100%;
-  height: 100%;
+  position: inherit;
+  bottom: 0;
+  height: 25%;
 `
 export const CityCard = styled.li<{ $selected: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
-  width: 100%;
-  height: 3rem;
+  padding: 1rem;
+  height: 5rem;
+  width: calc(100% / 6 - 0.833rem);
   border: 1px solid ${({ theme }) => theme.colors.blue};
   border-radius: 0.5rem;
   cursor: pointer;
@@ -29,11 +31,8 @@ export const CityCard = styled.li<{ $selected: boolean }>`
     transform: scale(1.05);
     color: ${({ theme }) => theme.colors.blue};
   }
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 0.5rem;
-  }
+
+  font-size: 2rem;
   span {
     margin-top: 0.5rem;
     font-size: 1.5rem;

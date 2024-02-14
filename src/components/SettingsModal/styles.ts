@@ -15,16 +15,16 @@ export const ModalOverlay = styled.div<{ $isOpen: boolean }>`
 export const ModalContent = styled.div`
   background-color: white;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem 5rem;
   border-radius: 1rem;
   border: 2px solid ${({ theme }) => theme.colors.blue};
   h1 {
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: 3rem;
   }
   h2 {
     font-weight: 500;
@@ -37,23 +37,26 @@ export const ButtonBox = styled.div`
   align-items: center;
   justify-content: center;
   h2 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+    font-size: 2rem;
   }
   div {
-    gap: 1rem;
+    gap: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
   }
 `
 
 export const SettingsButton = styled.button<{ $isSelected?: boolean }>`
-  padding: 0.25rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 5rem;
   width: 6rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border: none;
+  font-size: 1.5rem;
   cursor: pointer;
   &:hover {
     transform: scale(1.1);

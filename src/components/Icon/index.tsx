@@ -11,7 +11,6 @@ export default function Icon({
   name,
   size = '10rem',
   weatherCondition = true,
-  color,
 }: IconProps) {
   const weatherConditionImageMap = (openWeatherIconCode: string) => {
     if (openWeatherIconCode.includes('01')) {

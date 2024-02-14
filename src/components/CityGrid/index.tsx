@@ -29,18 +29,16 @@ export default function CityGrid() {
   ])
 
   return (
-    <>
-      <CitiesWrapper>
-        {cities.map((city) => (
-          <CityCard
-            $selected={selectedCity === city}
-            onClick={() => setSelectedCity(city)}
-            key={city}
-          >
-            {city}
-          </CityCard>
-        ))}
-      </CitiesWrapper>
-    </>
+    <CitiesWrapper>
+      {cities.map((city) => (
+        <CityCard
+          $selected={selectedCity === city}
+          onClick={() => setSelectedCity(city)}
+          key={city}
+        >
+          {city}
+        </CityCard>
+      ))}
+    </CitiesWrapper>
   )
 }
