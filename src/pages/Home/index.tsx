@@ -100,7 +100,7 @@ export default function Home() {
           <h1>{data.weather[0].main}</h1>
         </div>
       ) : status === 'success' && data.cod === '404' ? (
-        <h1>City {selectedCity} not Found.</h1>
+        <h1>City {selectedCity} not found.</h1>
       ) : null}
     </CityForecast>
   )
