@@ -27,7 +27,7 @@ describe('App', () => {
   beforeAll(() => {
     nock(`https://api.openweathermap.org`)
       .get(
-        `/data/2.5/weather?q=New%20York&units=standard&appid=19599096d057d3ff20882af531bd2530`,
+        `/data/2.5/weather?q=New%20York&units=standard&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`,
       )
       .reply(200, {
         weather: [
@@ -55,7 +55,7 @@ describe('App', () => {
 
     nock(`https://api.openweathermap.org`)
       .get(
-        `/data/2.5/weather?q=vitoria&units=standard&appid=19599096d057d3ff20882af531bd2530`,
+        `/data/2.5/weather?q=vitoria&units=standard&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`,
       )
       .reply(200, {
         weather: [
@@ -83,7 +83,7 @@ describe('App', () => {
 
     nock(`https://api.openweathermap.org`)
       .get(
-        `/data/2.5/weather?q=invalid%20city&units=standard&appid=19599096d057d3ff20882af531bd2530`,
+        `/data/2.5/weather?q=invalid%20city&units=standard&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`,
       )
       .reply(404, {
         cod: '404',
