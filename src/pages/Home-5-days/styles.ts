@@ -14,11 +14,34 @@ export const CityForecast = styled.div`
     align-items: center;
     justify-content: center;
   }
+
   div {
     height: 100%;
+  }
+`
+
+export const WeatherReport5Days = styled.ul`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+
+  li {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
+
+    h2 {
+      text-align: center;
+    }
+
+    div {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
   }
 `

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const IconWrapper = styled.div<{ $primary?: boolean; $neon?: boolean }>`
+export const IconWrapper = styled.span<{ $primary?: boolean; $neon?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -13,6 +13,7 @@ export default function Icon({
   weatherCondition = true,
 }: IconProps) {
   const weatherConditionImageMap = (openWeatherIconCode: string) => {
+    // CLEAR
     if (openWeatherIconCode.includes('01')) {
       return (
         <IconWrapper $primary={true} $neon={true}>
@@ -27,9 +28,11 @@ export default function Icon({
         </IconWrapper>
       )
     }
+
+    // PARTIALLY CLOUDY
     if (openWeatherIconCode.includes('02')) {
       return (
-        <IconWrapper $primary={false} $neon={true}>
+        <IconWrapper $primary={true} $neon={true}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
@@ -41,6 +44,8 @@ export default function Icon({
         </IconWrapper>
       )
     }
+
+    // CLOUDS
     if (
       openWeatherIconCode.includes('03') ||
       openWeatherIconCode.includes('04')
@@ -58,6 +63,7 @@ export default function Icon({
         </IconWrapper>
       )
     }
+    // RAIN
     if (
       openWeatherIconCode.includes('09') ||
       openWeatherIconCode.includes('10')
@@ -75,6 +81,8 @@ export default function Icon({
         </IconWrapper>
       )
     }
+
+    // LIGHTNING
     if (openWeatherIconCode.includes('11')) {
       return (
         <IconWrapper $primary={false} $neon={true}>
@@ -89,6 +97,8 @@ export default function Icon({
         </IconWrapper>
       )
     }
+
+    // SNOW
     if (openWeatherIconCode.includes('13')) {
       return (
         <IconWrapper $primary={false} $neon={true}>
@@ -103,6 +113,8 @@ export default function Icon({
         </IconWrapper>
       )
     }
+
+    // FOG
     if (openWeatherIconCode.includes('50')) {
       return (
         <IconWrapper $primary={false} $neon={true}>

@@ -4,11 +4,8 @@ import Icon from '../../components/Icon'
 import useSearchStore from '../../store/SearchStore'
 import useSettingsStore from '../../store/SettingsStore'
 import addUnitToTemperatureByType from '../../utils/add-unit-to-temperature-by-type'
-import {
-  CityForecast,
-  SelectPeriodButton,
-  SelectPeriodContainer,
-} from '../Home/styles'
+import { CityForecast, WeatherReport5Days } from './styles'
+import useForecastStore from '../../store/forecastStore'
 
 type FetchDataResponse = {
   list: {
@@ -22,8 +19,10 @@ type FetchDataResponse = {
       icon: string
     }[]
   }[]
-  name: string
-  cod: string
+  city: {
+    name: string
+  }
+  cod: number | string
 }
 
 type DaysObject = {
@@ -40,9 +39,11 @@ type DaysObject = {
 export default function Home5Days() {
   const [selectedCity] = useSearchStore((state) => [state.selectedCity])
 
+  const [setForecasting] = useForecastStore((state) => [state.setForecasting])
+
   const path = useLocation().pathname
 
-  const [temperatureUnit, timeFormat] = useSettingsStore((state) => [
+  const [temperatureUnit] = useSettingsStore((state) => [
     state.temperatureUnit,
     state.timeFormat,
   ])
@@ -82,13 +83,23 @@ export default function Home5Days() {
       Object.values(days).length > 5
         ? Object.values(days).slice(0, 5)
         : Object.values(days)
-    return { cod: data.cod, name: data.name, list }
+    return { cod: data.cod, name: data.city.name, list }
   }
 
   const { status, data } = useQuery({
     queryKey: ['weather', selectedCity, temperatureUnit, path],
     queryFn: async () => {
       const data = await fetchData()
+
+      if (data.cod === 200 || data.cod === '200') {
+        setForecasting(true)
+      } else {
+        setForecasting(false)
+      }
+
+      if (data.cod === 404 || data.cod === '404') {
+        return data
+      }
 
       return formattedDataFor5Days(data)
     },
@@ -106,44 +117,32 @@ export default function Home5Days() {
       ) : status === 'success' && data.cod === '200' ? (
         <div>
           <h1>{data.name}</h1>
-          {data.list.map((day) => (
-            <div key={day.dt_txt}>
-              <h2>{day.weekDay}</h2>
-              <div>
+          <WeatherReport5Days>
+            {data.list.map((day) => (
+              <li key={day.dt_txt}>
+                <h2>{day.weekDay}</h2>
                 <Icon name={day.icon} size={'8rem'} />
-              </div>
-              <div>
-                <span>{day.dt_txt}</span>
-                <span>
-                  Highest:{' '}
-                  {addUnitToTemperatureByType(
-                    Math.round(day.highest),
-                    temperatureUnit,
-                  )}
-                </span>
-                <span>
-                  Lowest:{' '}
-                  {addUnitToTemperatureByType(
-                    Math.round(day.lowest),
-                    temperatureUnit,
-                  )}
-                </span>
-              </div>
-            </div>
-          ))}
-          <SelectPeriodContainer>
-            <span>Forecast</span>
-            <div>
-              <SelectPeriodButton $isSelected={path === '/'}>
-                Now
-              </SelectPeriodButton>
-              <SelectPeriodButton $isSelected={path === '/5days'}>
-                5 Days
-              </SelectPeriodButton>
-            </div>
-          </SelectPeriodContainer>
+
+                <div>
+                  <span>{day.weather}</span>
+                  <span>
+                    H:{' '}
+                    {addUnitToTemperatureByType(
+                      Math.round(day.highest),
+                      temperatureUnit,
+                    )}{' '}
+                    / L:{' '}
+                    {addUnitToTemperatureByType(
+                      Math.round(day.lowest),
+                      temperatureUnit,
+                    )}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </WeatherReport5Days>
         </div>
-      ) : status === 'success' && data.cod === '404' ? (
+      ) : status === 'success' && (data.cod === '404' || data.cod === 404) ? (
         <h1>City {selectedCity} not Found.</h1>
       ) : null}
     </CityForecast>

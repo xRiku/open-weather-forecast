@@ -44,7 +44,7 @@ export function Header() {
         <img
           src={themeSwitch}
           alt="theme-switch"
-          style={{ height: 20, width: 20 }}
+          style={{ height: '1.5rem', width: '1.5rem' }}
         />
       </HeaderOptions>
     </HeaderWrapper>
