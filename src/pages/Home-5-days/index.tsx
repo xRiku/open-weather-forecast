@@ -67,7 +67,9 @@ export default function Home5Days() {
           lowest: item.main.temp,
           weather: item.weather[0].main,
           icon: item.weather[0].icon,
-          weekDay: new Date(item.dt * 1000).toDateString().split(' ')[0],
+          weekDay: new Date(item.dt_txt.split(' ')[0])
+            .toUTCString()
+            .slice(0, 3),
           dt_txt: item.dt_txt,
         }
       } else {
@@ -81,7 +83,7 @@ export default function Home5Days() {
     })
     const list =
       Object.values(days).length > 5
-        ? Object.values(days).slice(0, 5)
+        ? Object.values(days).slice(-5)
         : Object.values(days)
     return { cod: data.cod, name: data.city.name, list }
   }

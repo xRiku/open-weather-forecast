@@ -5,6 +5,8 @@ import useSettingsStore from '../../store/SettingsStore'
 import useSearchStore from '../../store/SearchStore'
 import { useLocation } from 'react-router-dom'
 import useForecastStore from '../../store/forecastStore'
+import TimeFormat from '../../enums/time-format'
+import addUnitToTemperatureByType from '../../utils/add-unit-to-temperature-by-type'
 
 export default function Home() {
   const [selectedCity] = useSearchStore((state) => [state.selectedCity])
@@ -53,7 +55,48 @@ export default function Home() {
       ) : (status === 'success' && data.cod === 200) || data.cod === '200' ? (
         <div>
           <h1>{data.name}</h1>
-          <Icon name={data.weather[0].icon} />
+          <div>
+            <Icon name={data.weather[0].icon} />
+            <div>
+              <span>
+                Temp:{' '}
+                {addUnitToTemperatureByType(
+                  Math.round(data.main.temp),
+                  temperatureUnit,
+                )}
+              </span>
+              <span>
+                Feels like:{' '}
+                {addUnitToTemperatureByType(
+                  Math.round(data.main.feels_like),
+                  temperatureUnit,
+                )}
+              </span>
+              <span>Humidity: {data.main.humidity}%</span>
+              <span>
+                Sunrise:{' '}
+                {new Date(data.sys.sunrise * 1000).toLocaleString(
+                  navigator.language,
+                  {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: timeFormat === TimeFormat['AM/PM'],
+                  },
+                )}
+              </span>
+              <span>
+                Sunset:{' '}
+                {new Date(data.sys.sunset * 1000).toLocaleString(
+                  navigator.language,
+                  {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: timeFormat === TimeFormat['AM/PM'],
+                  },
+                )}
+              </span>
+            </div>
+          </div>
           <h1>{data.weather[0].main}</h1>
         </div>
       ) : status === 'success' && data.cod === '404' ? (
@@ -62,40 +105,3 @@ export default function Home() {
     </CityForecast>
   )
 }
-
-/* <div>
-              <span>
-              Temp:{' '}
-              {addUnitToTemperatureByType(data.main.temp, temperatureUnit)}
-              </span>
-              <span>
-              Feels like:{' '}
-                {addUnitToTemperatureByType(
-                  data.main.feels_like,
-                  temperatureUnit,
-                )}
-              </span>
-              <span>Humidity: {data.main.humidity}%</span>
-              <span>
-              Sunrise:{' '}
-              {new Date(data.sys.sunrise * 1000).toLocaleString(
-                navigator.language,
-                {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: timeFormat === TimeFormat['AM/PM'],
-                  },
-                  )}
-                  </span>
-                  <span>
-                  Sunset:{' '}
-                  {new Date(data.sys.sunset * 1000).toLocaleString(
-                    navigator.language,
-                    {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: timeFormat === TimeFormat['AM/PM'],
-                    },
-                    )}
-                    </span>
-                  </div> */

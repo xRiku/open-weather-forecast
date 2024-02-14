@@ -14,11 +14,32 @@ export const CityForecast = styled.div`
     align-items: center;
     justify-content: center;
   }
-  div {
+  > div {
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      > span {
+        align-self: center;
+        margin-left: auto;
+      }
+
+      > div {
+        font-size: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        position: fixed;
+        left: calc(50% + 8rem);
+      }
+    }
   }
 `

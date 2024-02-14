@@ -7,6 +7,7 @@ export const SelectPeriodContainer = styled.div`
   justify-content: center;
   gap: 0.5rem;
   padding: 1rem;
+  margin-top: 1rem;
   span {
     font-size: 1.5rem;
   }
