@@ -53,8 +53,8 @@ export const HeaderOptions = styled.div<{ $selectedTheme: string }>`
       }
       ${({ $selectedTheme, theme }) =>
         $selectedTheme === 'light'
-          ? `background-color: ${theme.colors.white}; `
-          : `background-color: ${theme.colors.black}; `}
+          ? `background-color: ${theme.colors.white}; color: ${theme.colors.black};`
+          : `background-color: ${theme.colors.black}; color: ${theme.colors.white};`}
 
       &::placeholder {
         ${({ $selectedTheme, theme }) =>
