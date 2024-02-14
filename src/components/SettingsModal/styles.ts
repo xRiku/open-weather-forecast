@@ -12,8 +12,9 @@ export const ModalOverlay = styled.div<{ $isOpen: boolean }>`
   align-items: center;
 `
 
-export const ModalContent = styled.div`
-  background-color: white;
+export const ModalContent = styled.div<{ $selectedTheme: string }>`
+  background-color: ${({ $selectedTheme, theme }) =>
+    $selectedTheme === 'light' ? theme.colors.white : theme.colors.black};
   display: flex;
   gap: 2rem;
   flex-direction: column;
@@ -28,6 +29,12 @@ export const ModalContent = styled.div`
   }
   h2 {
     font-weight: 500;
+  }
+
+  h1,
+  h2 {
+    ${({ $selectedTheme, theme }) =>
+      $selectedTheme === 'light' ? theme.colors.white : theme.colors.black};
   }
 `
 
@@ -47,7 +54,10 @@ export const ButtonBox = styled.div`
   }
 `
 
-export const SettingsButton = styled.button<{ $isSelected?: boolean }>`
+export const SettingsButton = styled.button<{
+  $isSelected?: boolean
+  $selectedTheme: string
+}>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -62,9 +72,22 @@ export const SettingsButton = styled.button<{ $isSelected?: boolean }>`
     transform: scale(1.1);
     transition: 0.2s;
   }
-  border: 1px solid ${({ theme }) => theme.colors.blue};
-  background-color: ${({ theme, $isSelected }) =>
-    $isSelected ? theme.colors.blue : theme.colors.white};
-  color: ${({ theme, $isSelected }) =>
-    $isSelected ? theme.colors.white : theme.colors.blue};
+  border: ${({ $isSelected, theme }) =>
+    $isSelected ? `none` : '2px solid ' + theme.colors.blue};
+  background-color: ${({ theme, $isSelected, $selectedTheme }) =>
+    $selectedTheme === 'light'
+      ? $isSelected
+        ? theme.colors.blue
+        : theme.colors.white
+      : $isSelected
+        ? theme.colors.white
+        : theme.colors.black};
+  color: ${({ $selectedTheme, theme, $isSelected }) =>
+    $selectedTheme === 'light'
+      ? $isSelected
+        ? theme.colors.white
+        : theme.colors.blue
+      : $isSelected
+        ? theme.colors.blue
+        : theme.colors.white};
 `

@@ -21,21 +21,34 @@ export const SelectPeriodContainer = styled.div`
   }
 `
 
-export const SelectPeriodButton = styled.button<{ $isSelected: boolean }>`
+export const SelectPeriodButton = styled.button<{
+  $isSelected: boolean
+  $selectedTheme: string
+}>`
   padding: 0.25rem 2.5rem;
   border: 1px solid ${({ theme }) => theme.colors.blue};
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   font-size: 1.25rem;
-
-  ${({ $isSelected, theme }) =>
-    $isSelected
-      ? `background-color: ${theme.colors.blue}; color: ${theme.colors.white}; transition: 0.0s;`
-      : ''}
   &:hover {
-    transform: ${({ $isSelected }) =>
-      $isSelected ? 'scale(1.0)' : 'scale(1.1)'};
+    transform: scale(1.1);
     transition: 0.2s;
-    color: ${({ $isSelected, theme }) =>
-      $isSelected ? theme.colors.white : theme.colors.blue};
   }
+  border: ${({ $isSelected, theme }) =>
+    $isSelected ? `none` : '1px solid ' + theme.colors.blue};
+  background-color: ${({ theme, $isSelected, $selectedTheme }) =>
+    $selectedTheme === 'light'
+      ? $isSelected
+        ? theme.colors.blue
+        : theme.colors.white
+      : $isSelected
+        ? theme.colors.white
+        : theme.colors.black};
+  color: ${({ $selectedTheme, theme, $isSelected }) =>
+    $selectedTheme === 'light'
+      ? $isSelected
+        ? theme.colors.white
+        : theme.colors.blue
+      : $isSelected
+        ? theme.colors.blue
+        : theme.colors.white};
 `

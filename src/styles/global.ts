@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ $selectedTheme: string }>`
     * { 
         margin: 0;
         padding: 0;
@@ -11,34 +11,39 @@ export const GlobalStyle = createGlobalStyle`
         @media (max-width: 1080px) {
             font-size: 93.75%;
         }
-
-        @media (max-width: 1080px) {
+        @media (max-width: 720px) {
             font-size: 87.5%;
         }
         
     }
     body  {
-        @media (prefers-color-scheme: light) {
-            background-color: ${(props) => props.theme.colors.white};
-            color: ${(props) => props.theme.colors.black};
-            -webkit-font-smoothing: antialised;
-        }
-        background: ${(props) => props.theme.colors.black};
         -webkit-font-smoothing: antialised;
-        color: ${(props) => props.theme.colors.white};
+
+        ${({ $selectedTheme, theme }) =>
+          $selectedTheme === 'light'
+            ? `background-color: ${theme.colors.white};color: ${theme.colors.black};`
+            : `background: ${theme.colors.black};color: ${theme.colors.white};`}
+
+        -webkit-transition: background-color 1000ms linear;
+        -ms-transition: background-color 1000ms linear;
+        transition: background-color 1000ms linear;
     }
 
     body, input, textarea, button {
         font-family: 'Helvetica Neue', 'Helvetica', 'Roboto', sans-serif;
+        
     }
 
     h1, h2, h3, h4, h5, h6{
         font-weight: 500;
     }
 
+
+
     button {
         cursor: pointer;
         border: none;
+       
         background-color: transparent;
         color: inherit;
     }

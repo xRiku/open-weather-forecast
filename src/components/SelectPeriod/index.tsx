@@ -1,10 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { SelectPeriodContainer, SelectPeriodButton } from './styles'
+import useThemeStore from '../../store/ThemeStore'
 
 export default function SelectPeriod() {
-  const path = useLocation().pathname
+  const [theme] = useThemeStore((state) => [state.theme])
 
   const navigate = useNavigate()
+  const path = useLocation().pathname
 
   const handleSelectPeriodClick = (pathname: string) => {
     navigate(pathname)
@@ -15,12 +17,14 @@ export default function SelectPeriod() {
       <span>Forecast</span>
       <div>
         <SelectPeriodButton
+          $selectedTheme={theme}
           $isSelected={path === '/'}
           onClick={() => handleSelectPeriodClick('/')}
         >
           Now
         </SelectPeriodButton>
         <SelectPeriodButton
+          $selectedTheme={theme}
           $isSelected={path === '/5days'}
           onClick={() => handleSelectPeriodClick('/5days')}
         >

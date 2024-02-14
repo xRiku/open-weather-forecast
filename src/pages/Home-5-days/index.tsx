@@ -36,6 +36,15 @@ type DaysObject = {
   }
 }
 
+type FormattedDay = {
+  highest: number
+  lowest: number
+  weather: string
+  icon: string
+  weekDay: string
+  dt_txt: string
+}
+
 export default function Home5Days() {
   const [selectedCity] = useSearchStore((state) => [state.selectedCity])
 
@@ -52,7 +61,7 @@ export default function Home5Days() {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&units=${temperatureUnit}&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`,
     )
-    const jsonData = (await response.json()) as FetchDataResponse
+    const jsonData = await response.json()
     console.log(jsonData)
     return jsonData
   }
@@ -120,7 +129,7 @@ export default function Home5Days() {
         <div>
           <h1>{data.name}</h1>
           <WeatherReport5Days>
-            {data.list.map((day) => (
+            {data.list.map((day: FormattedDay) => (
               <li key={day.dt_txt}>
                 <h2>{day.weekDay}</h2>
                 <Icon name={day.icon} size={'8rem'} />

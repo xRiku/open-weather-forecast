@@ -3,11 +3,15 @@ import useSettingsStore from '../../store/SettingsStore'
 import TemperatureUnit from '../../enums/temperature-unit'
 import { ModalOverlay, ModalContent, ButtonBox, SettingsButton } from './styles'
 import TimeFormat from '../../enums/time-format'
+import useThemeStore from '../../store/ThemeStore'
 
 export default function SettingsModal() {
   const [isOpen, toggleModal] = useModalStore((state) => {
     return [state.isOpen, state.toggleModal]
   })
+
+  const [theme] = useThemeStore((state) => [state.theme])
+
   const [
     setTemperatureUnit,
     setTimeFormat,
@@ -34,12 +38,13 @@ export default function SettingsModal() {
 
   return (
     <ModalOverlay $isOpen={isOpen}>
-      <ModalContent>
+      <ModalContent $selectedTheme={theme}>
         <h1>Settings</h1>
         <ButtonBox>
           <h2>Units</h2>
           <div>
             <SettingsButton
+              $selectedTheme={theme}
               $isSelected={temperatureUnitTemp === TemperatureUnit.imperial}
               onClick={() => {
                 setTemperatureUnit(TemperatureUnit.imperial)
@@ -48,6 +53,7 @@ export default function SettingsModal() {
               Imperial
             </SettingsButton>
             <SettingsButton
+              $selectedTheme={theme}
               $isSelected={temperatureUnitTemp === TemperatureUnit.metric}
               onClick={() => {
                 setTemperatureUnit(TemperatureUnit.metric)
@@ -56,6 +62,7 @@ export default function SettingsModal() {
               Metric
             </SettingsButton>
             <SettingsButton
+              $selectedTheme={theme}
               $isSelected={temperatureUnitTemp === TemperatureUnit.standard}
               onClick={() => setTemperatureUnit(TemperatureUnit.standard)}
             >
@@ -67,12 +74,14 @@ export default function SettingsModal() {
           <h2>Time</h2>
           <div>
             <SettingsButton
+              $selectedTheme={theme}
               $isSelected={timeFormatTemp === TimeFormat['AM/PM']}
               onClick={() => setTimeFormat(TimeFormat['AM/PM'])}
             >
               AM/PM
             </SettingsButton>
             <SettingsButton
+              $selectedTheme={theme}
               $isSelected={timeFormatTemp === TimeFormat['24h']}
               onClick={() => setTimeFormat(TimeFormat['24h'])}
             >
@@ -83,6 +92,7 @@ export default function SettingsModal() {
         <ButtonBox>
           <div>
             <SettingsButton
+              $selectedTheme={theme}
               onClick={() => {
                 resetTempSettings()
                 toggleModal()
@@ -91,6 +101,7 @@ export default function SettingsModal() {
               Cancel
             </SettingsButton>
             <SettingsButton
+              $selectedTheme={theme}
               onClick={() => {
                 setSettings()
                 toggleModal()

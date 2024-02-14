@@ -6,6 +6,7 @@ import useSettingsStore from '../../store/SettingsStore'
 import { useState } from 'react'
 import Icon from '../Icon'
 import useSearchStore from '../../store/SearchStore'
+import useThemeStore from '../../store/ThemeStore'
 export function Header() {
   const toggleModal = useModalStore((state) => state.toggleModal)
   const [setSelectedCity] = useSearchStore((state) => [state.setSelectedCity])
@@ -13,6 +14,11 @@ export function Header() {
   const [isSearchOpen, toggleSearch] = useState(false)
 
   const [timeFormat] = useSettingsStore((state) => [state.timeFormat])
+
+  const [theme, toggleTheme] = useThemeStore((state) => [
+    state.theme,
+    state.toggleTheme,
+  ])
 
   const time = new Date().toLocaleTimeString(navigator.language, {
     hour: '2-digit',
@@ -29,7 +35,7 @@ export function Header() {
   return (
     <HeaderWrapper>
       <HeaderTime>{time}</HeaderTime>
-      <HeaderOptions>
+      <HeaderOptions $selectedTheme={theme}>
         {!isSearchOpen ? (
           <button onClick={() => toggleSearch(true)}>Search</button>
         ) : (
@@ -45,6 +51,7 @@ export function Header() {
           src={themeSwitch}
           alt="theme-switch"
           style={{ height: '1.5rem', width: '1.5rem' }}
+          onClick={toggleTheme}
         />
       </HeaderOptions>
     </HeaderWrapper>

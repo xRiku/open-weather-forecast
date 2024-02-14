@@ -1,4 +1,5 @@
 import useSearchStore from '../../store/SearchStore'
+import useThemeStore from '../../store/ThemeStore'
 import { CitiesWrapper, CityCard } from './styles'
 
 const cities = [
@@ -23,6 +24,8 @@ const cities = [
 ]
 
 export default function CityGrid() {
+  const theme = useThemeStore((state) => state.theme)
+
   const [selectedCity, setSelectedCity] = useSearchStore((state) => [
     state.selectedCity,
     state.setSelectedCity,
@@ -32,7 +35,8 @@ export default function CityGrid() {
     <CitiesWrapper>
       {cities.map((city) => (
         <CityCard
-          $selected={selectedCity === city}
+          $selectedTheme={theme}
+          $isSelected={selectedCity === city}
           onClick={() => setSelectedCity(city)}
           key={city}
         >

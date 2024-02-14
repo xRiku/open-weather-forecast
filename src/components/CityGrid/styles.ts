@@ -11,7 +11,10 @@ export const CitiesWrapper = styled.ul`
   bottom: 0;
   height: 25%;
 `
-export const CityCard = styled.li<{ $selected: boolean }>`
+export const CityCard = styled.li<{
+  $isSelected: boolean
+  $selectedTheme: string
+}>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,22 +22,34 @@ export const CityCard = styled.li<{ $selected: boolean }>`
   padding: 1rem;
   height: 5rem;
   width: calc(100% / 6 - 0.833rem);
-  border: 1px solid ${({ theme }) => theme.colors.blue};
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: 0.2s;
-  ${({ $selected, theme }) =>
-    $selected
-      ? `background-color: ${theme.colors.blue}; color: ${theme.colors.white}; transition: 0s`
-      : ''}
-  &:hover {
-    transform: scale(1.05);
-    color: ${({ theme }) => theme.colors.blue};
-  }
-
   font-size: 2rem;
   span {
     margin-top: 0.5rem;
     font-size: 1.5rem;
   }
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
+  }
+  border: ${({ $isSelected, theme }) =>
+    $isSelected ? `none` : '3px solid ' + theme.colors.blue};
+  background-color: ${({ theme, $isSelected, $selectedTheme }) =>
+    $selectedTheme === 'light'
+      ? $isSelected
+        ? theme.colors.blue
+        : theme.colors.white
+      : $isSelected
+        ? theme.colors.white
+        : theme.colors.black};
+  color: ${({ $selectedTheme, theme, $isSelected }) =>
+    $selectedTheme === 'light'
+      ? $isSelected
+        ? theme.colors.white
+        : theme.colors.blue
+      : $isSelected
+        ? theme.colors.blue
+        : theme.colors.white};
 `

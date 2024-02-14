@@ -7,8 +7,11 @@ import { Route, Routes } from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
 import Home from './pages/Home'
 import Home5Days from './pages/Home-5-days'
+import useThemeStore from './store/ThemeStore'
 
 function App() {
+  const theme = useThemeStore((state) => state.theme)
+
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
@@ -18,7 +21,7 @@ function App() {
             <Route path="/5days" element={<Home5Days />} />
           </Route>
         </Routes>
-        <GlobalStyle />
+        <GlobalStyle $selectedTheme={theme} />
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={true} />
     </>
