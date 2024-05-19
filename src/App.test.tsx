@@ -1,17 +1,16 @@
 import App from './App'
 import '@testing-library/jest-dom'
 import { fireEvent, render, waitFor } from '@testing-library/react'
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { beforeAll, describe, expect, it } from 'vitest'
 import nock from 'nock'
 import useSearchStore from './store/SearchStore'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-const AllTheProviders = ({ children }) => {
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        // ✅ turns retries off
         retry: false,
       },
     },
