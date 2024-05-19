@@ -2,7 +2,6 @@ import { ThemeProvider } from 'styled-components'
 import { GlobalStyle } from './styles/global'
 import { defaultTheme } from './styles/theme'
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Route, Routes } from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
 import Home from './pages/Home'
@@ -23,7 +22,6 @@ function App() {
         </Routes>
         <GlobalStyle $selectedTheme={theme} />
       </ThemeProvider>
-      <ReactQueryDevtools initialIsOpen={true} />
     </>
   )
 }
