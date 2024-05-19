@@ -11,5 +11,4 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
   },
-  base: '/open-weather-forecast/',
 })
